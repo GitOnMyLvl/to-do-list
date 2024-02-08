@@ -14,6 +14,10 @@
     <footer>
         <p>Created by Wolfgang Vinatzer - 2024</p>
     </footer>
-    <script defer src="bundle.js"></script>
+    <script defer src="bundle.js">
+        import Storage from './storage.js';
+        const storage = new Storage('testKey');
+        console.log(storage);
+    </script>
 </body>
 </html>
