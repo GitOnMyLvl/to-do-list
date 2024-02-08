@@ -3,15 +3,13 @@ class Sidebar {
     this.container = document.querySelector(containerSelector);
   }
 
-  generate(titles, clickFunction) {
+  display(titles, clickFunction) {
     const ul = document.createElement('ul');
     ul.className = 'task-list';
-    titles.forEach((title) => {
+    titles.forEach((title, index) => {
       const li = document.createElement('li');
       li.textContent = title;
-      li.addEventListener('click', () => {
-        clickFunction();
-      });
+      li.addEventListener('click', () => clickFunction(index + 1));
       ul.appendChild(li);
     });
     this.container.innerHTML = '';
