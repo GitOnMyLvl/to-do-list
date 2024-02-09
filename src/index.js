@@ -8,15 +8,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebar = new Sidebar('.sidebar');
   const main = new Main('.main');
   const taskManager = new TaskManager('toDoListTasks', () => {
-    sidebar.display(
-      taskManager.loadTasks(),
-      main.display(taskManager.loadTasks().todos),
-      console.log('test')
-    );
-    sidebar.setupAddButton(() => taskManager.addTask('New Task'));
+    renderSidebar();
   });
 
   taskManager.initializeTasks(tasks);
-  sidebar.display(taskManager.loadTasks());
-  sidebar.setupAddButton(() => taskManager.addTask('New Task'));
+  renderSidebar();
+
+  function renderSidebar() {
+    sidebar.display(taskManager.loadTasks(), (task) => {
+      main.display(task.todos);
+      main.setupAddButton(() => taskManager.addTodoToTask(task.id, testTodo));
+    });
+    sidebar.setupAddButton(() => taskManager.addTask('New Task'));
+  }
 });
+
+const testTodo = {
+  title: 'Test Todo',
+  description: 'This is a test todo',
+  dueDate: '2023-09-23',
+  priority: 'High',
+};

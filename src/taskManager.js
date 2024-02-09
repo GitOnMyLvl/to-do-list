@@ -34,10 +34,10 @@ class TaskManager {
     this.onTaskUpdated();
   }
 
-  addTodoToTask(taskId, todos) {
-    const taskIndex = this.tasks.findIndex((task) => task.id === taskId);
-    if (taskIndex !== -1) {
-      this.tasks[taskIndex].todos = todos;
+  addTodoToTask(taskId, newTodo) {
+    const task = this.tasks.find((task) => task.id === taskId);
+    if (task) {
+      task.todos.push(newTodo);
       this.saveTasks();
     } else {
       console.log('Task not found');

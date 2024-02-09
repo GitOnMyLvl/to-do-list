@@ -3,10 +3,8 @@ class Main {
     this.container = document.querySelector(containerSelector);
   }
 
-  display(todos, addTodoClick) {
+  display(todos) {
     this.container.innerHTML = '';
-    const addTodoButton = document.createElement('button');
-    addTodoButton.textContent = 'Add Todo';
     const todosContainer = document.createElement('div');
     todosContainer.className = 'todos-container';
 
@@ -21,10 +19,14 @@ class Main {
       `;
       todosContainer.appendChild(todoElement);
     });
-    addTodoButton.addEventListener('click', () => addTodoClick());
-
     this.container.appendChild(todosContainer);
-    this.container.appendChild(addTodoButton);
+  }
+
+  setupAddButton(addTodo) {
+    const button = document.createElement('button');
+    button.textContent = 'Add Todo';
+    button.addEventListener('click', () => addTodo());
+    this.container.appendChild(button);
   }
 }
 
