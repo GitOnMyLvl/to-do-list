@@ -1,9 +1,9 @@
 import Storage from './storage.js';
 
 class TaskManager {
-  constructor(storageKey) {
+  constructor(storageKey, onTaskUpdated) {
     this.storage = new Storage(storageKey);
-    this.tasks = [];
+    this.tasks = this.loadTasks();
   }
 
   initializeTasks(initialTasks) {
@@ -16,7 +16,34 @@ class TaskManager {
     }
   }
 
+  generateUniqueId() {
+    return this.tasks.length > 0
+      ? Math.max(...this.tasks.map((task) => task.id)) + 1
+      : 1;
+  }
+
+  addTask(title) {
+    const newTask = {
+      id: this.generateUniqueId(),
+      title,
+      todos: [],
+    };
+    this.tasks.push(newTask);
+    this.saveTasks();
+  }
+
+  addTodoToTask(taskId, todos) {
+    const taskIndex = this.tasks.findIndex((task) => task.id === taskId);
+    if (taskIndex !== -1) {
+      this.tasks[taskIndex].todos = todos;
+      this.saveTasks();
+    } else {
+      console.log('Task not found');
+    }
+  }
+
   saveTasks() {
+    console.log(this.tasks);
     this.storage.saveToStorage(this.tasks);
   }
 

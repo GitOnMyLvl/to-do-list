@@ -10,8 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const taskManager = new TaskManager('toDoListTasks');
   taskManager.initializeTasks(tasks);
   sidebar.display(
-    tasks.map((task) => task.title),
+    () => taskManager.addTask('New Task'),
+    taskManager.loadTasks(),
     (taskId) =>
-      taskManager.handleTaskClick(taskId, (todos) => main.display(todos))
+      taskManager.handleTaskClick(taskId, (todos) =>
+        main.display(todos, () => console.log('Add todo'))
+      )
   );
 });

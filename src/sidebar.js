@@ -3,16 +3,20 @@ class Sidebar {
     this.container = document.querySelector(containerSelector);
   }
 
-  display(titles, clickFunction) {
+  display(buttonClick, tasks, listClick) {
+    this.container.innerHTML = '';
+    const button = document.createElement('button');
+    button.textContent = 'Add Task';
+    button.addEventListener('click', () => buttonClick());
     const ul = document.createElement('ul');
     ul.className = 'task-list';
-    titles.forEach((title, index) => {
+    tasks.forEach((task) => {
       const li = document.createElement('li');
-      li.textContent = title;
-      li.addEventListener('click', () => clickFunction(index + 1));
+      li.textContent = task.title;
+      li.addEventListener('click', () => listClick(task.index + 1));
       ul.appendChild(li);
     });
-    this.container.innerHTML = '';
+    this.container.appendChild(button);
     this.container.appendChild(ul);
   }
 }
