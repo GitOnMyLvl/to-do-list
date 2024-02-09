@@ -4,6 +4,7 @@ class TaskManager {
   constructor(storageKey, onTaskUpdated) {
     this.storage = new Storage(storageKey);
     this.tasks = this.loadTasks();
+    this.onTaskUpdated = onTaskUpdated;
   }
 
   initializeTasks(initialTasks) {
@@ -30,6 +31,7 @@ class TaskManager {
     };
     this.tasks.push(newTask);
     this.saveTasks();
+    this.onTaskUpdated();
   }
 
   addTodoToTask(taskId, todos) {

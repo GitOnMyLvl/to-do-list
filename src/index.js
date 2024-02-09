@@ -7,14 +7,16 @@ import Main from './main.js';
 document.addEventListener('DOMContentLoaded', () => {
   const sidebar = new Sidebar('.sidebar');
   const main = new Main('.main');
-  const taskManager = new TaskManager('toDoListTasks');
+  const taskManager = new TaskManager('toDoListTasks', () => {
+    sidebar.display(
+      taskManager.loadTasks(),
+      main.display(taskManager.loadTasks().todos),
+      console.log('test')
+    );
+    sidebar.setupAddButton(() => taskManager.addTask('New Task'));
+  });
+
   taskManager.initializeTasks(tasks);
-  sidebar.display(
-    () => taskManager.addTask('New Task'),
-    taskManager.loadTasks(),
-    (taskId) =>
-      taskManager.handleTaskClick(taskId, (todos) =>
-        main.display(todos, () => console.log('Add todo'))
-      )
-  );
+  sidebar.display(taskManager.loadTasks());
+  sidebar.setupAddButton(() => taskManager.addTask('New Task'));
 });
