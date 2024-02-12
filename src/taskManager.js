@@ -1,9 +1,10 @@
 import Storage from './storage.js';
 
 class TaskManager {
-  constructor(storageKey) {
+  constructor(storageKey, onTaskUpdated) {
     this.storage = new Storage(storageKey);
     this.tasks = this.getTasks();
+    this.onTaskUpdated = onTaskUpdated;
   }
 
   initializeTasks(initialTasks) {
