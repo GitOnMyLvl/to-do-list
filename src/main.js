@@ -3,7 +3,7 @@ class Main {
     this.container = document.querySelector(containerSelector);
   }
 
-  display(todos) {
+  display(todos, addTodo) {
     this.container.innerHTML = '';
     const todosContainer = document.createElement('div');
     todosContainer.className = 'todos-container';
@@ -19,6 +19,7 @@ class Main {
       `;
       todosContainer.appendChild(todoElement);
     });
+    this.setupAddButton(addTodo);
     this.container.appendChild(todosContainer);
   }
 

@@ -14,16 +14,27 @@ document.addEventListener('DOMContentLoaded', () => {
   taskManager.initializeTasks(tasks);
   renderSidebar();
 
+  const updateAndDisplayTodos = (task) => {
+    taskManager.addTodoToTask(task.id, testTodo);
+    main.display(taskManager.getTaskTodos(task.id), () =>
+      updateAndDisplayTodos(task)
+    );
+  };
+
+  function renderMain(task) {
+    main.display(task.todos, () => updateAndDisplayTodos(task));
+  }
+
   function renderSidebar() {
-    sidebar.display(taskManager.loadTasks(), (task) => {
-      main.display(task.todos);
-      main.setupAddButton(() => taskManager.addTodoToTask(task.id, testTodo));
+    sidebar.display(taskManager.getTasks(), (task) => {
+      renderMain(task);
     });
     sidebar.setupAddButton(() => taskManager.addTask('New Task'));
   }
 });
 
 const testTodo = {
+  id: '1000',
   title: 'Test Todo',
   description: 'This is a test todo',
   dueDate: '2023-09-23',

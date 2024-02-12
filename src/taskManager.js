@@ -1,14 +1,13 @@
 import Storage from './storage.js';
 
 class TaskManager {
-  constructor(storageKey, onTaskUpdated) {
+  constructor(storageKey) {
     this.storage = new Storage(storageKey);
-    this.tasks = this.loadTasks();
-    this.onTaskUpdated = onTaskUpdated;
+    this.tasks = this.getTasks();
   }
 
   initializeTasks(initialTasks) {
-    const tasks = this.loadTasks();
+    const tasks = this.getTasks();
     if (tasks.length > 0) {
       this.tasks = tasks;
     } else {
@@ -44,17 +43,22 @@ class TaskManager {
     }
   }
 
+  getTaskTodos(taskId) {
+    const task = this.tasks.find((task) => task.id === taskId);
+    return task ? task.todos : [];
+  }
+
   saveTasks() {
     console.log(this.tasks);
     this.storage.saveToStorage(this.tasks);
   }
 
-  loadTasks() {
+  getTasks() {
     return this.storage.loadFromStorage();
   }
 
   deleteTask(taskId) {
-    const tasks = this.loadTasks();
+    const tasks = this.getTasks();
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     this.storage.saveToStorage(updatedTasks);
   }
