@@ -1,5 +1,7 @@
 import './styles.css';
 import TaskManager from './taskManager.js';
+import TaskForm from './taskForm.js';
+// import TodoForm from './todoForm.js';
 import tasks from './tasks.js';
 import Sidebar from './sidebar.js';
 import Main from './main.js';
@@ -11,12 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSidebar();
   });
 
+  const taskForm = new TaskForm((task) => {
+    taskManager.addTask(task.title);
+  });
+  taskForm.render();
+
   taskManager.initializeTasks(tasks);
   renderSidebar();
 
   const updateAndDisplayTodos = (task) => {
     console.log('updateAndDisplayTodos', task);
-    taskManager.addTodoToTask(task.id, testTodo);
+    taskManager.addTodoToTask(task.id); //, todo);
     main.display(
       taskManager.getTaskTodos(task.id),
       () => updateAndDisplayTodos(task),
@@ -60,13 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSidebar();
       }
     );
-    sidebar.setupAddButton(() => taskManager.addTask('New Task'));
+    sidebar.setupAddButton(() => taskForm.showForm());
   }
-  const testTodo = {
-    id: taskManager.generateUniqueTodoId(),
-    title: 'Test Todo',
-    description: 'This is a test todo',
-    dueDate: '2023-09-23',
-    priority: 'High',
-  };
 });
