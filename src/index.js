@@ -16,19 +16,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const updateAndDisplayTodos = (task) => {
     taskManager.addTodoToTask(task.id, testTodo);
-    main.display(taskManager.getTaskTodos(task.id), () =>
-      updateAndDisplayTodos(task)
+    main.display(
+      taskManager.getTaskTodos(task.id),
+      () => updateAndDisplayTodos(task),
+      (todoId) => {
+        taskManager.deleteTodoFromTask(task.id, todoId);
+        renderMain(task);
+      }
     );
   };
 
+  function handleDeleteTodo(taskId, todoId) {
+    taskManager.deleteTodoFromTask(taskId, todoId);
+    const updatedTask = taskManager.getTaskById(taskId);
+    if (updatedTask) {
+      renderMain(updatedTask);
+    } else {
+      console.error('Failed to find the task after deletion');
+    }
+  }
+
   function renderMain(task) {
-    main.display(task.todos, () => updateAndDisplayTodos(task));
+    console.log(task);
+    main.display(
+      task.todos,
+      () => updateAndDisplayTodos(task),
+      (todoId) => {
+        handleDeleteTodo(task.id, todoId);
+      }
+    );
   }
 
   function renderSidebar() {
-    sidebar.display(taskManager.getTasks(), (task) => {
-      renderMain(task);
-    });
+    sidebar.display(
+      taskManager.getTasks(),
+      (task) => {
+        renderMain(task);
+      },
+      (taskId) => {
+        taskManager.deleteTask(taskId);
+        renderSidebar();
+      }
+    );
     sidebar.setupAddButton(() => taskManager.addTask('New Task'));
   }
 });

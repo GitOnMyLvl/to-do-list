@@ -44,6 +44,18 @@ class TaskManager {
     }
   }
 
+  deleteTodoFromTask(taskId, todoId) {
+    const task = this.tasks.find((task) => task.id === taskId);
+    console.log(task);
+    if (task) {
+      console.log(todoId);
+      task.todos = task.todos.filter((todo) => todo.id !== todoId);
+      this.saveTasks();
+    } else {
+      console.log('Task not found');
+    }
+  }
+
   getTaskTodos(taskId) {
     const task = this.tasks.find((task) => task.id === taskId);
     return task ? task.todos : [];
@@ -56,6 +68,10 @@ class TaskManager {
 
   getTasks() {
     return this.storage.loadFromStorage();
+  }
+
+  getTaskById(taskId) {
+    return this.tasks.find((task) => task.id === taskId);
   }
 
   deleteTask(taskId) {

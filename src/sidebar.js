@@ -3,14 +3,20 @@ class Sidebar {
     this.container = document.querySelector(containerSelector);
   }
 
-  display(tasks, onTaskSelected) {
+  display(tasks, onTaskSelected, deleteTask) {
     this.container.innerHTML = '';
     const ul = document.createElement('ul');
     ul.className = 'task-list';
     tasks.forEach((task) => {
       const li = document.createElement('li');
       li.textContent = task.title;
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Delete';
+      deleteButton.addEventListener('click', () => {
+        deleteTask(task.id);
+      });
       li.addEventListener('click', () => onTaskSelected(task));
+      li.appendChild(deleteButton);
       ul.appendChild(li);
     });
     this.container.appendChild(ul);
