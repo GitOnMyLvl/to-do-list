@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSidebar();
 
   const updateAndDisplayTodos = (task) => {
+    console.log('updateAndDisplayTodos', task);
     taskManager.addTodoToTask(task.id, testTodo);
     main.display(
       taskManager.getTaskTodos(task.id),
@@ -28,8 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handleDeleteTodo(taskId, todoId) {
     taskManager.deleteTodoFromTask(taskId, todoId);
-    const updatedTask = taskManager.getTaskById(taskId);
-    if (updatedTask) {
+    const todos = taskManager.getTaskTodos(taskId);
+    console.log(todos);
+    if (todos) {
+      const updatedTask = { id: taskId, todos };
       renderMain(updatedTask);
     } else {
       console.error('Failed to find the task after deletion');
@@ -37,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderMain(task) {
-    console.log(task);
     main.display(
       task.todos,
       () => updateAndDisplayTodos(task),
@@ -60,12 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
     );
     sidebar.setupAddButton(() => taskManager.addTask('New Task'));
   }
+  const testTodo = {
+    id: taskManager.generateUniqueTodoId(),
+    title: 'Test Todo',
+    description: 'This is a test todo',
+    dueDate: '2023-09-23',
+    priority: 'High',
+  };
 });
-
-const testTodo = {
-  id: '1000',
-  title: 'Test Todo',
-  description: 'This is a test todo',
-  dueDate: '2023-09-23',
-  priority: 'High',
-};

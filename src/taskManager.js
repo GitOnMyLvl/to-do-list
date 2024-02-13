@@ -17,15 +17,19 @@ class TaskManager {
     }
   }
 
-  generateUniqueId() {
+  generateUniqueTaskId() {
     return this.tasks.length > 0
       ? Math.max(...this.tasks.map((task) => task.id)) + 1
       : 1;
   }
 
+  generateUniqueTodoId() {
+    return `todo-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+  }
+
   addTask(title) {
     const newTask = {
-      id: this.generateUniqueId(),
+      id: this.generateUniqueTaskId(),
       title,
       todos: [],
     };
@@ -46,9 +50,7 @@ class TaskManager {
 
   deleteTodoFromTask(taskId, todoId) {
     const task = this.tasks.find((task) => task.id === taskId);
-    console.log(task);
     if (task) {
-      console.log(todoId);
       task.todos = task.todos.filter((todo) => todo.id !== todoId);
       this.saveTasks();
     } else {
@@ -62,7 +64,6 @@ class TaskManager {
   }
 
   saveTasks() {
-    console.log(this.tasks);
     this.storage.saveToStorage(this.tasks);
   }
 
