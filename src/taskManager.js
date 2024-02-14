@@ -80,13 +80,17 @@ class TaskManager {
   }
 
   deleteTask(taskId) {
-    const tasks = this.getTasks();
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    this.storage.saveToStorage(updatedTasks);
+    this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    this.saveTasks();
+    if (this.onTaskUpdated) this.onTaskUpdated();
   }
 
   setCurrentTaskId(taskId) {
     this.currentTaskId = taskId;
+  }
+
+  clearCurrentTaskId() {
+    this.currentTaskId = null;
   }
 
   getCurrentTaskId() {

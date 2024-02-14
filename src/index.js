@@ -77,6 +77,19 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       (taskId) => {
         taskManager.deleteTask(taskId);
+        console.log('Deleting task', taskId);
+        console.log('Current task id', taskManager.getCurrentTaskId());
+        if (taskManager.getCurrentTaskId() === taskId) {
+          console.log('Clearing current task id');
+          taskManager.clearCurrentTaskId();
+          const remainingTasks = taskManager.getTasks();
+          console.log('Remaining tasks', remainingTasks);
+          if (remainingTasks.length > 0) {
+            renderMain(remainingTasks[0]);
+          } else {
+            main.clear();
+          }
+        }
         renderSidebar();
       }
     );

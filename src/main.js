@@ -4,7 +4,7 @@ class Main {
   }
 
   display(todos = [], addTodo, deleteTodo) {
-    this.container.innerHTML = '';
+    this.clear();
     const todosContainer = document.createElement('div');
     todosContainer.className = 'todos-container';
 
@@ -34,6 +34,10 @@ class Main {
     button.textContent = 'Add Todo';
     button.addEventListener('click', () => addTodo());
     this.container.appendChild(button);
+  }
+
+  clear() {
+    this.container.innerHTML = '';
   }
 }
 

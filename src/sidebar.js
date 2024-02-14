@@ -12,7 +12,8 @@ class Sidebar {
       li.textContent = task.title;
       const deleteButton = document.createElement('button');
       deleteButton.textContent = 'Delete';
-      deleteButton.addEventListener('click', () => {
+      deleteButton.addEventListener('click', (e) => {
+        e.stopPropagation();
         deleteTask(task.id);
       });
       li.addEventListener('click', () => onTaskSelected(task));
