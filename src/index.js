@@ -1,7 +1,7 @@
 import './styles.css';
 import TaskManager from './taskManager.js';
 import TaskForm from './taskForm.js';
-// import TodoForm from './todoForm.js';
+import TodoForm from './todoForm.js';
 import tasks from './tasks.js';
 import Sidebar from './sidebar.js';
 import Main from './main.js';
@@ -18,12 +18,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   taskForm.render();
 
+  const todoForm = new TodoForm((todo) => {
+    const currentTaskId = taskManager.getCurrentTaskId();
+    if (currentTaskId) {
+      taskManager.addTodoToTask(currentTaskId, todo);
+      const task = taskManager.getTaskById(currentTaskId);
+      renderMain(task);
+    } else {
+      console.error('No current task selected');
+    }
+  });
+  todoForm.render();
+
   taskManager.initializeTasks(tasks);
   renderSidebar();
 
   const updateAndDisplayTodos = (task) => {
     console.log('updateAndDisplayTodos', task);
-    taskManager.addTodoToTask(task.id); //, todo);
+    todoForm.showForm();
     main.display(
       taskManager.getTaskTodos(task.id),
       () => updateAndDisplayTodos(task),
@@ -47,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderMain(task) {
+    taskManager.setCurrentTaskId(task.id);
     main.display(
       task.todos,
       () => updateAndDisplayTodos(task),

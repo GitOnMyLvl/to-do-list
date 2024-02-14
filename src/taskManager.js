@@ -4,6 +4,7 @@ class TaskManager {
   constructor(storageKey, onTaskUpdated) {
     this.storage = new Storage(storageKey);
     this.tasks = this.getTasks();
+    this.currentTaskId = null;
     this.onTaskUpdated = onTaskUpdated;
   }
 
@@ -41,8 +42,10 @@ class TaskManager {
   addTodoToTask(taskId, newTodo) {
     const task = this.tasks.find((task) => task.id === taskId);
     if (task) {
+      newTodo.id = this.generateUniqueTodoId();
       task.todos.push(newTodo);
       this.saveTasks();
+      this.onTaskUpdated();
     } else {
       console.log('Task not found');
     }
@@ -53,6 +56,7 @@ class TaskManager {
     if (task) {
       task.todos = task.todos.filter((todo) => todo.id !== todoId);
       this.saveTasks();
+      this.onTaskUpdated();
     } else {
       console.log('Task not found');
     }
@@ -81,13 +85,12 @@ class TaskManager {
     this.storage.saveToStorage(updatedTasks);
   }
 
-  handleTaskClick(taskId, displayCallback) {
-    const task = this.tasks.find((task) => task.id === taskId);
-    if (task) {
-      displayCallback(task.todos);
-    } else {
-      console.log('Task not found');
-    }
+  setCurrentTaskId(taskId) {
+    this.currentTaskId = taskId;
+  }
+
+  getCurrentTaskId() {
+    return this.currentTaskId;
   }
 }
 

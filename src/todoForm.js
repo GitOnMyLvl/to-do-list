@@ -32,8 +32,8 @@ class TodoForm {
     `;
 
     document.body.insertAdjacentHTML('beforeend', formHtml);
-    this.form = document.getElementById('todoFormModal');
-    this.formModal = document.getElementById('todoForm');
+    this.formModal = document.getElementById('todoFormModal');
+    this.form = document.getElementById('todoForm');
     this.attachSubmitEvent();
     this.attachCancelEvent();
   }
@@ -42,15 +42,15 @@ class TodoForm {
     const form = document.getElementById('todoForm');
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const todoName = form.todoName.value.trim();
+      const todoTitle = form.todoTitle.value.trim();
       const todoDescription = form.todoDescription.value.trim();
-      const todoDate = form.todoDate.value;
+      const todoDueDate = form.todoDueDate.value;
       const todoPriority = form.todoPriority.value;
-      if (todoName) {
+      if (todoTitle) {
         this.submitCallback({
-          title: todoName,
+          title: todoTitle,
           description: todoDescription || '',
-          dueDate: todoDate,
+          dueDate: todoDueDate,
           priority: todoPriority,
         });
         this.hideForm();
