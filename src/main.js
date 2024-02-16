@@ -31,7 +31,8 @@ class Main {
 
   setupAddButton(addTodo) {
     const button = document.createElement('button');
-    button.textContent = 'Add Todo';
+    button.className = 'add-todo';
+    button.textContent = '+';
     button.addEventListener('click', () => addTodo());
     this.container.appendChild(button);
   }

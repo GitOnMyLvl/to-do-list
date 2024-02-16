@@ -25,7 +25,7 @@ class TodoForm {
             </select>
             
             <button type="submit">Add Todo</button>
-            <button type="button" id="todoCancel" class="cancel-button">Cancel</button>
+            <button type="button" id="cancel-todo" class="cancel-button">Cancel</button>
           </form>
         </div>
       </div>
@@ -59,7 +59,7 @@ class TodoForm {
   }
 
   attachCancelEvent() {
-    const cancelButton = document.getElementById('cancel');
+    const cancelButton = document.getElementById('cancel-todo');
     cancelButton.addEventListener('click', () => {
       this.hideForm();
     });

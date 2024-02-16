@@ -10,7 +10,7 @@ class TaskForm {
         <form id="taskForm">
         <input type="text" id="taskName" name="taskName" required>
         <button type="submit">Create Task</button>
-        <button id="cancel" class="cancel-button">Cancel</button>
+        <button type="button" id="cancel" class="cancel-button">Cancel</button>
         </form>
       </div>
     </div>
