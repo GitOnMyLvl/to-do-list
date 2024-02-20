@@ -5,6 +5,9 @@
     --main-area-bg-color: #FAFAFA;
     --button-link-color: #007BFF;
     --primary-text-color: #333333;
+    --low-priority-color: #add8e6;
+    --medium-priority-color: #ffff99;
+    --high-priority-color: #ff9999;
 }
 
 *{
@@ -108,6 +111,18 @@ header h1{
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1rem;
     padding: 1rem;
+}
+
+.main .todos-container .high-priority{
+    background-color: var(--high-priority-color);
+}
+
+.main .todos-container .medium-priority{
+    background-color: var(--medium-priority-color);
+}
+
+.main .todos-container .low-priority{
+    background-color: var(--low-priority-color);
 }
 
 .main .todo{

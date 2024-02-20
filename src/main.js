@@ -1,3 +1,5 @@
+import { parseISO, formatDistance } from 'date-fns';
+
 class Main {
   constructor(containerSelector) {
     this.container = document.querySelector(containerSelector);
@@ -10,19 +12,26 @@ class Main {
 
     todos.forEach((todo) => {
       const todoElement = document.createElement('div');
+      const buttonsContainer = document.createElement('div');
       const deleteButton = document.createElement('button');
+      const editButton = document.createElement('button');
       todoElement.className = 'todo';
+      const dueDate = parseISO(todo.dueDate);
+      const timeLeft = formatDistance(dueDate, new Date(), { addSuffix: true });
       todoElement.innerHTML = `
         <h3>${todo.title}</h3>
         <p>${todo.description}</p>
-        <p>${todo.dueDate}</p>
-        <p>${todo.priority}</p>
+        <p>Due ${timeLeft}</p>
       `;
+      todoElement.classList.add(this.setPriorityClass(todo.priority));
       deleteButton.textContent = 'Delete';
       deleteButton.addEventListener('click', () => {
         deleteTodo(todo.id);
       });
-      todoElement.appendChild(deleteButton);
+      editButton.textContent = 'Edit';
+      buttonsContainer.appendChild(editButton);
+      buttonsContainer.appendChild(deleteButton);
+      todoElement.appendChild(buttonsContainer);
       todosContainer.appendChild(todoElement);
     });
     this.setupAddButton(addTodo);
@@ -39,6 +48,19 @@ class Main {
 
   clear() {
     this.container.innerHTML = '';
+  }
+
+  setPriorityClass(priority) {
+    switch (priority) {
+      case 'High':
+        return 'high-priority';
+      case 'Medium':
+        return 'medium-priority';
+      case 'Low':
+        return 'low-priority';
+      default:
+        return '';
+    }
   }
 }
 
