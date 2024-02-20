@@ -11,7 +11,8 @@ class Sidebar {
       const li = document.createElement('li');
       li.textContent = task.title;
       const deleteButton = document.createElement('button');
-      deleteButton.textContent = 'X';
+      deleteButton.textContent = '';
+      deleteButton.className = 'delete-task';
       deleteButton.addEventListener('click', (e) => {
         e.stopPropagation();
         deleteTask(task.id);
