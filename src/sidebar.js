@@ -9,7 +9,9 @@ class Sidebar {
     ul.className = 'task-list';
     tasks.forEach((task) => {
       const li = document.createElement('li');
-      li.textContent = task.title;
+      const text = document.createElement('span');
+      text.textContent = task.title;
+      li.className = 'task';
       const deleteButton = document.createElement('button');
       deleteButton.textContent = '';
       deleteButton.className = 'delete-task';
@@ -17,7 +19,12 @@ class Sidebar {
         e.stopPropagation();
         deleteTask(task.id);
       });
-      li.addEventListener('click', () => onTaskSelected(task));
+      text.addEventListener('click', () => {
+        this.clearSelected(ul);
+        li.classList.add('selected');
+        onTaskSelected(task);
+      });
+      li.appendChild(text);
       li.appendChild(deleteButton);
       ul.appendChild(li);
     });
@@ -30,6 +37,10 @@ class Sidebar {
     button.className = 'add-task';
     button.addEventListener('click', () => addTask());
     this.container.appendChild(button);
+  }
+
+  clearSelected(ul) {
+    ul.querySelectorAll('li').forEach((li) => li.classList.remove('selected'));
   }
 }
 

@@ -1,7 +1,7 @@
 :root {
     --header-color: #003366;
     --sidebar-bg-color: #F0F0F0;
-    --sidebar-accent-color: #B8D8B8;
+    --sidebar-accent-color: #83d384;
     --main-area-bg-color: #FAFAFA;
     --button-link-color: #007BFF;
     --primary-text-color: #333333;
@@ -84,7 +84,7 @@ header h1{
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    cursor: pointer;
+    cursor: default;
 }
 
 .sidebar .task-list .delete-task{
@@ -96,6 +96,23 @@ header h1{
     background-position: center;
     border: none;
     cursor: pointer;
+}
+
+.sidebar .task-list .task span{
+    cursor: pointer;
+}
+
+.sidebar .task-list .task span:hover{
+   background-color: var(--sidebar-bg-color);
+   filter: brightness(1.1);
+}
+
+.sidebar .task-list .delete-task:hover{
+    background-color: var(--high-priority-color);
+}
+
+.sidebar .task-list .selected{
+    color: var(--sidebar-accent-color);
 }
 
 .main{
