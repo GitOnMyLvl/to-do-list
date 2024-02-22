@@ -10,8 +10,10 @@ class Sidebar {
     tasks.forEach((task) => {
       const li = document.createElement('li');
       const text = document.createElement('span');
-      text.textContent = task.title;
+      const buttons = document.createElement('div');
       li.className = 'task';
+      text.textContent = task.title;
+      buttons.className = 'task-buttons';
       const deleteButton = document.createElement('button');
       const editButton = document.createElement('button');
       deleteButton.textContent = '';
@@ -32,8 +34,9 @@ class Sidebar {
         onTaskSelected(task);
       });
       li.appendChild(text);
-      li.appendChild(editButton);
-      li.appendChild(deleteButton);
+      buttons.appendChild(editButton);
+      buttons.appendChild(deleteButton);
+      li.appendChild(buttons);
       ul.appendChild(li);
     });
     this.container.appendChild(ul);

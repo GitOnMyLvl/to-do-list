@@ -87,6 +87,22 @@ header h1{
     cursor: default;
 }
 
+.sidebar .task-list .task-buttons{
+    display: flex;
+    gap: 1rem;
+}
+
+.sidebar .task-list .edit-task{
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url('./edit.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+}
+
 .sidebar .task-list .delete-task{
     width: 1.5rem;
     height: 1.5rem;

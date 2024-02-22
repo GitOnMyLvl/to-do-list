@@ -59,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function handleDeleteTodo(taskId, todoId) {
     taskManager.deleteTodoFromTask(taskId, todoId);
     const todos = taskManager.getTaskTodos(taskId);
-    console.log(todos);
     if (todos) {
       const updatedTask = { id: taskId, todos };
       renderMain(updatedTask);
@@ -77,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
         handleDeleteTodo(task.id, todoId);
       },
       (todo) => {
-        console.log(todo);
         todoForm.showForm(todo);
       }
     );
