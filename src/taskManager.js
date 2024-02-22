@@ -84,6 +84,8 @@ class TaskManager {
     const task = this.tasks.find((task) => task.id === taskId);
     if (task) {
       newTodo.id = this.generateUniqueTodoId();
+      newTodo.done = false;
+      console.log(newTodo);
       task.todos.push(newTodo);
       this.saveTasks();
       this.onTaskUpdated();
@@ -110,18 +112,29 @@ class TaskManager {
 
   editTodo(taskId, todoId, newTodo) {
     const task = this.tasks.find((task) => task.id === taskId);
-    if (!task) {
-      console.log('Task not found');
-      return;
-    }
     if (task) {
       const todoIndex = task.todos.findIndex((todo) => todo.id === todoId);
-      if (todoIndex === -1) {
-        console.log('Todo not found');
-        return;
-      }
       if (todoIndex !== -1) {
-        task.todos[todoIndex] = { ...task.todos[todoIndex], ...newTodo };
+        Object.keys(newTodo).forEach((key) => {
+          task.todos[todoIndex][key] = newTodo[key];
+        });
+
+        this.saveTasks();
+        this.onTaskUpdated();
+      } else {
+        console.log('Todo not found');
+      }
+    } else {
+      console.log('Task not found');
+    }
+  }
+
+  toggleTodoDone(taskId, todoId) {
+    const task = this.tasks.find((task) => task.id === taskId);
+    if (task) {
+      const todo = task.todos.find((todo) => todo.id === todoId);
+      if (todo) {
+        todo.done = !todo.done;
         this.saveTasks();
         this.onTaskUpdated();
       } else {

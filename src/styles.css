@@ -92,10 +92,9 @@ header h1{
     gap: 1rem;
 }
 
-.sidebar .task-list .edit-task{
+.task-buttons button{
     width: 1.5rem;
     height: 1.5rem;
-    background-image: url('./edit.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -103,15 +102,18 @@ header h1{
     cursor: pointer;
 }
 
+.task-buttons button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+    border-radius: 50%;
+}
+
+.sidebar .task-list .edit-task{
+    background-image: url('./edit.svg');
+}
+
 .sidebar .task-list .delete-task{
-    width: 1.5rem;
-    height: 1.5rem;
     background-image: url('./delete.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    border: none;
-    cursor: pointer;
 }
 
 .sidebar .task-list .task span{
@@ -119,12 +121,11 @@ header h1{
 }
 
 .sidebar .task-list .task span:hover{
-   background-color: var(--sidebar-bg-color);
-   filter: brightness(1.1);
+   transform: scale(1.05);
 }
 
-.sidebar .task-list .delete-task:hover{
-    background-color: var(--high-priority-color);
+.add-task:hover{
+    transform: scale(1.05);
 }
 
 .sidebar .task-list .selected{
@@ -146,6 +147,7 @@ header h1{
     padding: 1rem;
 }
 
+
 .main .todos-container .high-priority{
     background-color: var(--high-priority-color);
 }
@@ -156,6 +158,11 @@ header h1{
 
 .main .todos-container .low-priority{
     background-color: var(--low-priority-color);
+}
+
+.main .todos-container .done{
+    background-color: var(--sidebar-accent-color);
+    text-decoration: line-through;
 }
 
 .main .todo{
@@ -189,6 +196,40 @@ header h1{
     font-size: 1.5rem;
 }
 
+.todo-buttons{
+    display: flex;
+    gap: 1rem;
+    align-self: end;
+}
+
+.todo-buttons button{
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: inherit;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+}
+
+.todo-buttons button:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+    border-radius: 50%;
+}
+
+.todo-buttons .done-todo{
+    background-image: url('./done.svg');
+}
+
+.todo-buttons .edit-todo{
+    background-image: url('./edit.svg');
+}
+
+.todo-buttons .delete-todo{
+    background-image: url('./delete.svg');
+}
 
 footer{
     grid-column: 1 / 3;

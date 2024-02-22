@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const todoForm = new TodoForm((todo) => {
     const currentTaskId = taskManager.getCurrentTaskId();
     if (currentTaskId) {
+      console.log(todo);
       if (todo.id) {
         const todoId = todo.id;
         const newTodo = { ...todo };
@@ -73,10 +74,16 @@ document.addEventListener('DOMContentLoaded', () => {
       task.todos,
       () => updateAndDisplayTodos(task),
       (todoId) => {
+        console.log('deleteTodo', todoId);
         handleDeleteTodo(task.id, todoId);
       },
       (todo) => {
         todoForm.showForm(todo);
+      },
+      (todoId) => {
+        taskManager.toggleTodoDone(task.id, todoId);
+        const updatedTask = taskManager.getTaskById(task.id);
+        renderMain(updatedTask);
       }
     );
   }
