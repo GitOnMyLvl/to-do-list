@@ -3,7 +3,7 @@ class Sidebar {
     this.container = document.querySelector(containerSelector);
   }
 
-  display(tasks, onTaskSelected, deleteTask) {
+  display(tasks, onTaskSelected, deleteTask, editTask) {
     this.container.innerHTML = '';
     const ul = document.createElement('ul');
     ul.className = 'task-list';
@@ -13,11 +13,18 @@ class Sidebar {
       text.textContent = task.title;
       li.className = 'task';
       const deleteButton = document.createElement('button');
+      const editButton = document.createElement('button');
       deleteButton.textContent = '';
       deleteButton.className = 'delete-task';
       deleteButton.addEventListener('click', (e) => {
         e.stopPropagation();
         deleteTask(task.id);
+      });
+      editButton.textContent = '';
+      editButton.className = 'edit-task';
+      editButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        editTask(task.id);
       });
       text.addEventListener('click', () => {
         this.clearSelected(ul);
@@ -25,6 +32,7 @@ class Sidebar {
         onTaskSelected(task);
       });
       li.appendChild(text);
+      li.appendChild(editButton);
       li.appendChild(deleteButton);
       ul.appendChild(li);
     });

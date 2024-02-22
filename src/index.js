@@ -14,9 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const taskForm = new TaskForm((task) => {
-    taskManager.addTask(task.title);
+    if (task.id) {
+      taskManager.editTask(task.id, task.title);
+    } else {
+      taskManager.addTask(task.title);
+    }
+    renderSidebar();
   });
-  taskForm.render();
 
   const todoForm = new TodoForm((todo) => {
     const currentTaskId = taskManager.getCurrentTaskId();
@@ -77,13 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       (taskId) => {
         taskManager.deleteTask(taskId);
-        console.log('Deleting task', taskId);
-        console.log('Current task id', taskManager.getCurrentTaskId());
         if (taskManager.getCurrentTaskId() === taskId) {
-          console.log('Clearing current task id');
           taskManager.clearCurrentTaskId();
           const remainingTasks = taskManager.getTasks();
-          console.log('Remaining tasks', remainingTasks);
           if (remainingTasks.length > 0) {
             renderMain(remainingTasks[0]);
           } else {
@@ -91,6 +91,12 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
         renderSidebar();
+      },
+      (taskId) => {
+        const taskToEdit = taskManager.getTaskById(taskId);
+        if (taskToEdit) {
+          taskForm.showForm(taskToEdit);
+        }
       }
     );
     sidebar.setupAddButton(() => taskForm.showForm());

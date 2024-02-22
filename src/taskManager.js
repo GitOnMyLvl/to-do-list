@@ -39,6 +39,17 @@ class TaskManager {
     this.onTaskUpdated();
   }
 
+  editTask(taskId, newTitle) {
+    const task = this.tasks.find((task) => task.id === taskId);
+    if (task) {
+      task.title = newTitle;
+      this.saveTasks();
+      this.onTaskUpdated();
+    } else {
+      console.log('Task not found');
+    }
+  }
+
   addTodoToTask(taskId, newTodo) {
     const task = this.tasks.find((task) => task.id === taskId);
     if (task) {
