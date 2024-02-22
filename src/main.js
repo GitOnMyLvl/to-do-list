@@ -5,7 +5,7 @@ class Main {
     this.container = document.querySelector(containerSelector);
   }
 
-  display(todos = [], addTodo, deleteTodo) {
+  display(todos = [], addTodo, deleteTodo, editTodo) {
     this.clear();
     const todosContainer = document.createElement('div');
     todosContainer.className = 'todos-container';
@@ -27,6 +27,9 @@ class Main {
       deleteButton.textContent = 'Delete';
       deleteButton.addEventListener('click', () => {
         deleteTodo(todo.id);
+      });
+      editButton.addEventListener('click', () => {
+        editTodo(todo);
       });
       editButton.textContent = 'Edit';
       buttonsContainer.appendChild(editButton);

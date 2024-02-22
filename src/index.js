@@ -25,20 +25,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const todoForm = new TodoForm((todo) => {
     const currentTaskId = taskManager.getCurrentTaskId();
     if (currentTaskId) {
-      taskManager.addTodoToTask(currentTaskId, todo);
-      const task = taskManager.getTaskById(currentTaskId);
-      renderMain(task);
+      if (todo.id) {
+        const todoId = todo.id;
+        const newTodo = { ...todo };
+        taskManager.editTodo(currentTaskId, todoId, newTodo);
+        const task = taskManager.getTaskById(currentTaskId);
+        renderMain(task);
+      } else {
+        taskManager.addTodoToTask(currentTaskId, todo);
+        const task = taskManager.getTaskById(currentTaskId);
+        renderMain(task);
+      }
     } else {
       console.error('No current task selected');
     }
   });
-  todoForm.render();
 
   taskManager.initializeTasks(tasks);
   renderSidebar();
 
   const updateAndDisplayTodos = (task) => {
-    console.log('updateAndDisplayTodos', task);
     todoForm.showForm();
     main.display(
       taskManager.getTaskTodos(task.id),
@@ -69,6 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
       () => updateAndDisplayTodos(task),
       (todoId) => {
         handleDeleteTodo(task.id, todoId);
+      },
+      (todo) => {
+        console.log(todo);
+        todoForm.showForm(todo);
       }
     );
   }

@@ -1,6 +1,9 @@
 class TodoForm {
-  constructor(submitCallback) {
+  constructor(submitCallback, editMode = false, todo = null) {
     this.submitCallback = submitCallback;
+    this.editMode = editMode;
+    this.todo = todo;
+    this.render();
   }
 
   render() {
@@ -24,7 +27,7 @@ class TodoForm {
               <option value="Low">Low</option>
             </select>
             
-            <button type="submit">Add Todo</button>
+            <button type="submit" id="todoSubmitBtn">Add Todo</button>
             <button type="button" id="cancel-todo" class="cancel-button">Cancel</button>
           </form>
         </div>
@@ -34,6 +37,7 @@ class TodoForm {
     document.body.insertAdjacentHTML('beforeend', formHtml);
     this.formModal = document.getElementById('todoFormModal');
     this.form = document.getElementById('todoForm');
+    this.submitBtn = document.getElementById('todoSubmitBtn');
     this.attachSubmitEvent();
     this.attachCancelEvent();
   }
@@ -52,6 +56,7 @@ class TodoForm {
           description: todoDescription || '',
           dueDate: todoDueDate,
           priority: todoPriority,
+          id: this.editMode ? this.todo.id : null,
         });
         this.hideForm();
       }
@@ -69,7 +74,21 @@ class TodoForm {
     this.formModal.style.display = 'none';
   }
 
-  showForm() {
+  showForm(todo = null) {
+    if (todo) {
+      this.todo = todo;
+      this.editMode = true;
+      this.form.todoTitle.value = todo.title;
+      this.form.todoDescription.value = todo.description;
+      this.form.todoDueDate.value = todo.dueDate;
+      this.form.todoPriority.value = todo.priority;
+      this.submitBtn.textContent = 'Edit Todo';
+    } else {
+      this.editMode = false;
+      this.todo = null;
+      this.form.reset();
+      this.submitBtn.textContent = 'Add Todo';
+    }
     this.formModal.style.display = 'flex';
   }
 }

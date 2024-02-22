@@ -24,10 +24,6 @@ class TaskManager {
       : 1;
   }
 
-  generateUniqueTodoId() {
-    return `todo-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
-  }
-
   addTask(title) {
     const newTask = {
       id: this.generateUniqueTaskId(),
@@ -48,34 +44,6 @@ class TaskManager {
     } else {
       console.log('Task not found');
     }
-  }
-
-  addTodoToTask(taskId, newTodo) {
-    const task = this.tasks.find((task) => task.id === taskId);
-    if (task) {
-      newTodo.id = this.generateUniqueTodoId();
-      task.todos.push(newTodo);
-      this.saveTasks();
-      this.onTaskUpdated();
-    } else {
-      console.log('Task not found');
-    }
-  }
-
-  deleteTodoFromTask(taskId, todoId) {
-    const task = this.tasks.find((task) => task.id === taskId);
-    if (task) {
-      task.todos = task.todos.filter((todo) => todo.id !== todoId);
-      this.saveTasks();
-      this.onTaskUpdated();
-    } else {
-      console.log('Task not found');
-    }
-  }
-
-  getTaskTodos(taskId) {
-    const task = this.tasks.find((task) => task.id === taskId);
-    return task ? task.todos : [];
   }
 
   saveTasks() {
@@ -106,6 +74,62 @@ class TaskManager {
 
   getCurrentTaskId() {
     return this.currentTaskId;
+  }
+
+  generateUniqueTodoId() {
+    return `todo-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+  }
+
+  addTodoToTask(taskId, newTodo) {
+    const task = this.tasks.find((task) => task.id === taskId);
+    if (task) {
+      newTodo.id = this.generateUniqueTodoId();
+      task.todos.push(newTodo);
+      this.saveTasks();
+      this.onTaskUpdated();
+    } else {
+      console.log('Task not found');
+    }
+  }
+
+  deleteTodoFromTask(taskId, todoId) {
+    const task = this.tasks.find((task) => task.id === taskId);
+    if (task) {
+      task.todos = task.todos.filter((todo) => todo.id !== todoId);
+      this.saveTasks();
+      this.onTaskUpdated();
+    } else {
+      console.log('Task not found');
+    }
+  }
+
+  getTaskTodos(taskId) {
+    const task = this.tasks.find((task) => task.id === taskId);
+    return task ? task.todos : [];
+  }
+
+  editTodo(taskId, todoId, newTodo) {
+    const task = this.tasks.find((task) => task.id === taskId);
+    if (!task) {
+      console.log('Task not found');
+      return;
+    }
+    if (task) {
+      const todoIndex = task.todos.findIndex((todo) => todo.id === todoId);
+      if (todoIndex === -1) {
+        console.log('Todo not found');
+        return;
+      }
+      if (todoIndex !== -1) {
+        task.todos[todoIndex] = { ...task.todos[todoIndex], ...newTodo };
+        this.saveTasks();
+        this.onTaskUpdated();
+      } else {
+        console.log('Todo not found');
+      }
+    } else {
+      console.log('Task not found');
+    }
   }
 }
 
