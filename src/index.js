@@ -2,6 +2,7 @@ import './styles.css';
 import TaskManager from './taskManager.js';
 import TaskForm from './taskForm.js';
 import TodoForm from './todoForm.js';
+import ConfirmationForm from './confirmationForm.js';
 import tasks from './tasks.js';
 import Sidebar from './sidebar.js';
 import Main from './main.js';
@@ -25,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const todoForm = new TodoForm((todo) => {
     const currentTaskId = taskManager.getCurrentTaskId();
     if (currentTaskId) {
-      console.log(todo);
       if (todo.id) {
         const todoId = todo.id;
         const newTodo = { ...todo };
@@ -42,6 +42,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  const confirmationForm = new ConfirmationForm(() => {});
+
+  function confirmTaskDeletion(taskId) {
+    confirmationForm.showForm();
+    confirmationForm.confirmCallback = () => handleDeleteTask(taskId);
+  }
+
+  function confirmTodoDeletion(taskId, todoId) {
+    confirmationForm.showForm();
+    confirmationForm.confirmCallback = () => handleDeleteTodo(taskId, todoId);
+  }
+
   taskManager.initializeTasks(tasks);
   renderSidebar();
 
@@ -57,14 +69,23 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   };
 
+  function handleDeleteTask(taskId) {
+    taskManager.deleteTask(taskId);
+    const tasks = taskManager.getTasks();
+    if (tasks.length > 0) {
+      renderMain(tasks[0]);
+    } else {
+      main.clear();
+    }
+    renderSidebar();
+  }
+
   function handleDeleteTodo(taskId, todoId) {
     taskManager.deleteTodoFromTask(taskId, todoId);
     const todos = taskManager.getTaskTodos(taskId);
     if (todos) {
       const updatedTask = { id: taskId, todos };
       renderMain(updatedTask);
-    } else {
-      console.error('Failed to find the task after deletion');
     }
   }
 
@@ -74,8 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
       task.todos,
       () => updateAndDisplayTodos(task),
       (todoId) => {
-        console.log('deleteTodo', todoId);
-        handleDeleteTodo(task.id, todoId);
+        confirmTodoDeletion(task.id, todoId);
       },
       (todo) => {
         todoForm.showForm(todo);
@@ -95,17 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderMain(task);
       },
       (taskId) => {
-        taskManager.deleteTask(taskId);
-        if (taskManager.getCurrentTaskId() === taskId) {
-          taskManager.clearCurrentTaskId();
-          const remainingTasks = taskManager.getTasks();
-          if (remainingTasks.length > 0) {
-            renderMain(remainingTasks[0]);
-          } else {
-            main.clear();
-          }
-        }
-        renderSidebar();
+        confirmTaskDeletion(taskId);
       },
       (taskId) => {
         const taskToEdit = taskManager.getTaskById(taskId);
@@ -116,4 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
     );
     sidebar.setupAddButton(() => taskForm.showForm());
   }
+
+  renderMain(taskManager.getTasks()[0]);
 });

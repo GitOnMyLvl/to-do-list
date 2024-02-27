@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "to-do-list",
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": "explicit"
+		},
+		"eslint.validate": [
+			"javascript",
+			"javascriptreact"
+		],
+		"editor.tabSize": 2,
+		"cSpell.words": [
+			"todos"
+		]
+	}
+}

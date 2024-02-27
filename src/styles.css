@@ -289,3 +289,22 @@ footer{
 #taskName{
     grid-column: 1/3;
 }
+
+#confirmForm{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+#confirmForm .form-buttons{
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+#confirmForm .form-buttons button{
+    flex: 1;
+    cursor: pointer;
+}
