@@ -21,7 +21,7 @@ html{
 }
 
 body{
-    
+    color: var(--primary-text-color);
     display: grid;
     min-height: 100vh;
     grid-template-columns: 1fr 4fr;
@@ -196,6 +196,11 @@ header h1{
     font-size: 1.5rem;
 }
 
+.main .add-todo:hover{
+    transform: scale(1.05);
+    font-size: scale(1.05);
+}
+
 .todo-buttons{
     display: flex;
     gap: 1rem;
@@ -273,4 +278,14 @@ footer{
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+#taskForm{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+#taskName{
+    grid-column: 1/3;
 }
