@@ -26,6 +26,7 @@ body{
     min-height: 100vh;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: auto minmax(0, 1fr) auto;
+    font-size: 1.2rem;
 }
 
 header, footer{
@@ -44,6 +45,7 @@ header{
 header h1{
     padding: 1rem;
     text-align: start;
+    font-size: 2rem;
 }
 
 .sidebar{
@@ -193,7 +195,6 @@ header h1{
     justify-content: center;
     align-items: center;
     font-weight: 400;
-    font-size: 1.5rem;
 }
 
 .main .add-todo:hover{
@@ -307,4 +308,16 @@ footer{
 #confirmForm .form-buttons button{
     flex: 1;
     cursor: pointer;
+}
+
+@media (min-width: 600px) {
+    body {
+        font-size: calc(1rem + 0.25vw); /* Slightly larger font size for wider screens */
+    }
+}
+
+@media (min-width: 1000px) {
+    body {
+        font-size: calc(1rem + .0.5vw); /* Even larger font size for desktop screens */
+    }
 }
