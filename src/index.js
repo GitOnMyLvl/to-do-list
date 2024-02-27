@@ -10,6 +10,7 @@ import Main from './main.js';
 document.addEventListener('DOMContentLoaded', () => {
   const sidebar = new Sidebar('.sidebar');
   const main = new Main('.main');
+  const listButton = document.getElementById('listBtn');
   const taskManager = new TaskManager('toDoListTasks', () => {
     renderSidebar();
   });
@@ -126,6 +127,11 @@ document.addEventListener('DOMContentLoaded', () => {
     );
     sidebar.setupAddButton(() => taskForm.showForm());
   }
+
+  listButton.addEventListener('click', () => {
+    sidebar.toggle();
+    main.toggle();
+  });
 
   renderMain(taskManager.getTasks()[0]);
 });

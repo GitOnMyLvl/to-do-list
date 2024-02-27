@@ -42,6 +42,20 @@ header{
     align-items: center;
 }
 
+header .list{
+    background-image: url('./list.svg');
+    padding: 1rem;
+    margin: 1rem;
+    display: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    filter: invert(1);
+}
+
 header h1{
     padding: 1rem;
     text-align: start;
@@ -144,7 +158,7 @@ header h1{
 
 .main .todos-container{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1rem;
     padding: 1rem;
 }
@@ -195,6 +209,7 @@ header h1{
     justify-content: center;
     align-items: center;
     font-weight: 400;
+    font-size: 1.5rem;
 }
 
 .main .add-todo:hover{
@@ -312,12 +327,36 @@ footer{
 
 @media (min-width: 600px) {
     body {
-        font-size: calc(1rem + 0.25vw); /* Slightly larger font size for wider screens */
+        font-size: calc(1rem + 0.125vw); /* Slightly larger font size for wider screens */
     }
 }
 
 @media (min-width: 1000px) {
     body {
-        font-size: calc(1rem + .0.5vw); /* Even larger font size for desktop screens */
+        font-size: calc(1rem + 0.25vw); /* Even larger font size for desktop screens */
     }
+}
+
+@media (max-width: 800px) {
+   .sidebar.shown{
+       display: flex;
+   }
+
+   .sidebar{
+        grid-column: 1 / 3;
+        display: none;
+   }
+
+   header .list{
+       display: block;
+   }
+
+   .main.hidden{
+        display: none;
+   }
+
+   .main{
+       grid-column: 1 / 3;
+       display: block;
+   }
 }

@@ -53,6 +53,10 @@ class Sidebar {
   clearSelected(ul) {
     ul.querySelectorAll('li').forEach((li) => li.classList.remove('selected'));
   }
+
+  toggle() {
+    this.container.classList.toggle('shown');
+  }
 }
 
 export default Sidebar;

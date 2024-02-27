@@ -79,6 +79,10 @@ class Main {
         return '';
     }
   }
+
+  toggle() {
+    this.container.classList.toggle('hidden');
+  }
 }
 
 export default Main;
